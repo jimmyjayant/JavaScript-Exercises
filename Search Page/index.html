@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Search Page</title>
+        <meta name="description" content="This is a Word Suggestion Project built using HTML5, Vanilla JS, AJAX, PHP 8.0+. Enter a first few letters and it will show a range of words that starts with those letters. It uses linear search algorithm.">
+        <meta name="author" content="Jimmy Jayant">
+        <title>Word Suggestion Project 1</title>
         <style>
 
         </style>
@@ -11,16 +13,11 @@
     <body>
         <div>
             <h3>
-                Enter Any Name to Search:- 
+                Enter a first few letters for word suggestion:- 
             </h3>
 
-            <input type="text" placeholder="Enter name" id="searchtext" size="100">
+            <input type="text" placeholder="Enter first few letters" id="searchtext" size="50">
 
-            <br>
-            <br>
-<!--
-            <button type="button" onclick="search()">Search</button>
-        -->
             <br>
             <br>
 
@@ -28,19 +25,27 @@
         </div>
 
         <script>
-            var search_text = document.getElementById("searchtext");
-            search_text.addEventListener("input", function() {
-                //console.log(search_text.value);
-                if(search_text.value.trim() != "")
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onload = function() {
-                        document.getElementById("result").innerHTML = this.responseText;
+            if(window.location.protocol == 'file:')
+            {
+                alert('Please start your server.');
+            }
+            else
+            {
+                var search_text = document.getElementById("searchtext");
+                search_text.addEventListener("input", function() {
+                    if(search_text.value.trim() != "")
+                    {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onload = function() {
+                            document.getElementById("result").innerHTML = this.responseText;
+                        }
+                        var str = search_text.value.trim();
+                        var fc = str[0];
+                        xhttp.open("GET", "getdata.php?str=" + str + "&fc=" + fc, true);
+                        xhttp.send();
                     }
-                    var str = search_text.value;
-                    var fc = str[0];
-                    xhttp.open("GET", "getdata.php?str=" + str + "&fc=" + fc, true);
-                    xhttp.send();
-            });
+                });
+            }
         </script>
     </body>
 </html>
